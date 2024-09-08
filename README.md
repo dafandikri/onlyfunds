@@ -15,14 +15,46 @@
 
 3. **Define Models:**
    - Buat model di `models.py` sesuai dengan kebutuhan aplikasi.
+     ```
+        from django.db import models
+
+        class Item(models.Model):
+           name = models.CharField(max_length=255)
+           price = models.IntegerField()
+           description = models.TextField()
+           bank = models.CharField(max_length=255)
+            created_at = models.DateTimeField(auto_now_add=True)
+
+        def __str__(self):
+           return self.name
+     ```
    - Jalankan migrasi untuk membuat tabel di database. Gunakan `python manage.py makemigrations` dan `python manage.py migrate`
 
 4. **Create Views and Templates:**
    - Buat fungsi view di `views.py`.
    - Buat template HTML di direktori `templates`.
+     ```
+        <h1>OnlyFunds</h1>
+        <h5>NPM: </h5>
+        <p>{{ npm }}<p>
+        <h5>Name: </h5>
+        <p>{{ name }}<p>
+        <h5>Class: </h5>
+        <p>{{ class }}<p>
+     ```
 
 5. **Configure URLs:**
    - Tambahkan URL routing di `urls.py` untuk menghubungkan view dengan URL.
+     ```
+     from django.urls import path
+     from main.views import show_main
+
+     app_name = 'main'
+
+     urlpatterns = [
+        path('', show_main, name='show_main'),
+     ]
+     ```
 
 6. **Testing and Deployment:**
    - Jalankan server lokal untuk pengujian. Gunakan `python manage.py runserver`
