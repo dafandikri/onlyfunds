@@ -1,4 +1,7 @@
 # OnlyFunds
+**Home of The Best Cashless Transaction**
+
+Welcome to OnlyFunds, the best platform for cashless transactions.
 
 [OnlyFunds' Website](https://erdafa-andikri-onlyfunds.pbp.cs.ui.ac.id/)
 
