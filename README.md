@@ -5,6 +5,8 @@ Welcome to OnlyFunds, the best platform for cashless transactions.
 
 [OnlyFunds' Website](https://erdafa-andikri-onlyfunds.pbp.cs.ui.ac.id/)
 
+## Tugas 2
+
 ### 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
 1. **Setup Environment:**
