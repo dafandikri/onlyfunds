@@ -102,7 +102,7 @@ Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena:
 
 ### 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 
-Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memastikan bahwa data dapat dikirim dan diterima antara berbagai komponen sistem, seperti antara server dan klien, atau antara berbagai layanan mikro. Ini memungkinkan aplikasi untuk berfungsi dengan baik, menyediakan informasi yang dibutuhkan pengguna, dan memastikan integritas dan konsistensi data.
+Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memastikan bahwa data dapat dikirim dan diterima antara berbagai komponen sistem, seperti antara server dan klien. Ini memungkinkan aplikasi untuk berfungsi dengan baik, menyediakan informasi yang dibutuhkan pengguna, dan memastikan integritas dan konsistensi data.
 
 ### 2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 
@@ -115,34 +115,114 @@ Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memastik
   - **Lebih Fleksibel**: XML dapat digunakan untuk mendefinisikan format data yang lebih kompleks dan mendukung skema yang lebih ketat.
   - **Dukungan untuk Metadata**: XML memungkinkan penambahan metadata melalui atribut dan namespace.
 
-**JSON lebih populer dibandingkan XML** karena lebih mudah digunakan dan lebih efisien dalam hal kinerja dan ukuran data, terutama dalam aplikasi web dan API modern.
+**JSON lebih baik dibandingkan XML** karena lebih mudah digunakan dan lebih efisien dalam hal kinerja dan ukuran data, terutama dalam aplikasi web dan API modern.
 
 ### 3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
 
-Method `is_valid()` pada form Django digunakan untuk memeriksa apakah data yang dikirimkan ke form memenuhi semua validasi yang ditentukan dalam form tersebut. Method ini mengembalikan `True` jika data valid dan `False` jika tidak. Kita membutuhkan method ini untuk memastikan bahwa data yang diterima oleh aplikasi adalah valid sebelum diproses lebih lanjut, sehingga mencegah kesalahan dan potensi masalah keamanan.
+Method `is_valid()` pada form Django digunakan untuk memeriksa apakah data yang dikirimkan ke form memenuhi semua validasi yang ditentukan dalam form tersebut. Method ini mengembalikan `True` jika data valid dan `False` jika tidak. 
 
-### Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+Kita membutuhkan method ini untuk memastikan bahwa data yang diterima oleh aplikasi adalah valid sebelum diproses lebih lanjut, sehingga mencegah kesalahan dan potensi masalah keamanan.
 
-- **CSRF Token**: `csrf_token` digunakan untuk melindungi aplikasi dari serangan Cross-Site Request Forgery (CSRF). Ini adalah token unik yang dihasilkan untuk setiap sesi pengguna dan harus disertakan dalam setiap form yang dikirimkan.
-- **Tanpa `csrf_token`**: Jika kita tidak menambahkan `csrf_token`, aplikasi menjadi rentan terhadap serangan CSRF, di mana penyerang dapat membuat pengguna yang sah mengirimkan permintaan yang tidak diinginkan ke server.
-- **Pemanfaatan oleh Penyerang**: Penyerang dapat memanfaatkan kelemahan ini untuk melakukan tindakan berbahaya atas nama pengguna yang sah, seperti mengubah data atau melakukan transaksi tanpa sepengetahuan pengguna.
+### 4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
 
-### 4. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+`csrf_token` digunakan untuk melindungi aplikasi dari serangan Cross-Site Request Forgery (CSRF). Ini adalah token unik yang dihasilkan untuk setiap sesi pengguna dan harus disertakan dalam setiap pengiriman formulir.
+
+Jika kita tidak menambahkan `csrf_token`, aplikasi menjadi rentan terhadap serangan CSRF, di mana seorang penyerang dapat membuat pengguna yang sah secara tidak sadar mengirimkan permintaan yang tidak diinginkan ke server.
+
+Kerentanan ini dapat dieksploitasi oleh penyerang untuk melakukan tindakan jahat atas nama pengguna yang sah, seperti memodifikasi data atau melakukan transaksi tanpa pengetahuan pengguna.
+
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Membuat Input Form untuk Menambahkan Objek Model
+   - Langkah-langkah:
+     1. Buat directory `templates` berisi `base.html`.
+      ```
+      {% load static %}
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+         <meta charset="UTF-8" />
+         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         {% block meta %} {% endblock meta %}
+      </head>
+
+      <body>
+         {% block content %} {% endblock content %}
+      </body>
+      </html>
+      ```
+     2. Buat `forms.py` di directory proyek
+      ```
+      from django.forms import ModelForm
+      from main.models import ItemEntry
+
+      class ItemEntryForm(ModelForm):
+         class Meta:
+            model = ItemEntry
+            fields = ["name", "description", "price", "bank"]
+      ```
+     3. Buat view untuk input form di `views.py`.
+      ```
+      from django.shortcuts import render, redirect
+      from main.forms import ItemEntryForm
+
+      def create_item_entry(request):
+         form = ItemEntryForm(request.POST or None)
+
+         if form.is_valid() and request.method == "POST":
+            form.save()
+            return redirect('main:show_main')
+
+         context = {'form': form}
+         return render(request, "create_item_entry.html", context)
+      ```
+     4. Buat template HTML di directory `templates` di directory aplikasi
+      ```
+      {% extends 'base.html' %} 
+      {% block content %}
+      <h1>Add New Item Entry</h1>
+
+      <form method="POST">
+         {% csrf_token %}
+         <table>
+            {{ form.as_table }}
+            <tr>
+                  <td></td>
+                  <td>
+                     <input type="submit" value="Add Item Entry" />
+                  </td>
+            </tr>
+         </table>
+      </form>
+
+      {% endblock %}
+      ```
+     4. Tambahkan URL untuk form di `urls.py` di directory aplikasi
+      ```
+      from django.urls import path
+      from main.views import show_main, create_item_entry, show_xml, show_json, show_xml_by_id, show_json_by_id
+
+      app_name = 'main'
+
+      urlpatterns = [
+         path('', show_main, name='show_main'),
+         path('create-item-entry', create_item_entry, name='create_item_entry'),
+      ```
 
 
 
-### 5. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
+### 6. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
 
 ### Hasil Akses URL di Postman
 
-#### show_xml
+#### XML
 ![show_xml](xml.png)
 
-#### show_json
+#### JSON
 ![show_json](json.png)
 
-#### show_xml_by_id
+#### XML by ID
 ![show_xml_by_id](xml_id.png)
 
-#### show_json_by_id
+#### JSON by ID
 ![show_json_by_id](json_id.png)
