@@ -8,9 +8,9 @@ def show_main(request):
     item_entries = ItemEntry.objects.all()
 
     context = {
-        'name': 'Pak Bepe',
-        'class': 'PBP D',
-        'npm': '2306123456',
+        'name': 'Erdafa Andikri',
+        'class': 'PBP C',
+        'npm': '2306244993',
         'item_entries': item_entries
     }
 
