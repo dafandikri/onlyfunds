@@ -97,3 +97,52 @@ Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena:
 - **Abstraction:** ORM menyediakan lapisan abstraksi antara kode Python dan database relasional.
 - **Object-Oriented:** ORM memungkinkan pengembang untuk bekerja dengan database menggunakan objek Python, bukan query SQL.
 - **Automatic Mapping:** ORM secara otomatis memetakan tabel database ke kelas Python dan kolom tabel ke atribut kelas.
+
+## Tugas 3
+
+### 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+
+Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memastikan bahwa data dapat dikirim dan diterima antara berbagai komponen sistem, seperti antara server dan klien, atau antara berbagai layanan mikro. Ini memungkinkan aplikasi untuk berfungsi dengan baik, menyediakan informasi yang dibutuhkan pengguna, dan memastikan integritas dan konsistensi data.
+
+### 2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+
+- **JSON**:
+  - **Lebih Ringkas**: JSON memiliki sintaks yang lebih sederhana dan lebih ringkas dibandingkan XML, sehingga lebih mudah dibaca dan ditulis oleh manusia.
+  - **Kinerja Lebih Baik**: JSON biasanya lebih cepat diproses oleh mesin karena ukurannya yang lebih kecil dan struktur yang lebih sederhana.
+  - **Dukungan Luas**: JSON didukung secara native oleh banyak bahasa pemrograman dan API modern.
+
+- **XML**:
+  - **Lebih Fleksibel**: XML dapat digunakan untuk mendefinisikan format data yang lebih kompleks dan mendukung skema yang lebih ketat.
+  - **Dukungan untuk Metadata**: XML memungkinkan penambahan metadata melalui atribut dan namespace.
+
+**JSON lebih populer dibandingkan XML** karena lebih mudah digunakan dan lebih efisien dalam hal kinerja dan ukuran data, terutama dalam aplikasi web dan API modern.
+
+### 3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+
+Method `is_valid()` pada form Django digunakan untuk memeriksa apakah data yang dikirimkan ke form memenuhi semua validasi yang ditentukan dalam form tersebut. Method ini mengembalikan `True` jika data valid dan `False` jika tidak. Kita membutuhkan method ini untuk memastikan bahwa data yang diterima oleh aplikasi adalah valid sebelum diproses lebih lanjut, sehingga mencegah kesalahan dan potensi masalah keamanan.
+
+### Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+
+- **CSRF Token**: `csrf_token` digunakan untuk melindungi aplikasi dari serangan Cross-Site Request Forgery (CSRF). Ini adalah token unik yang dihasilkan untuk setiap sesi pengguna dan harus disertakan dalam setiap form yang dikirimkan.
+- **Tanpa `csrf_token`**: Jika kita tidak menambahkan `csrf_token`, aplikasi menjadi rentan terhadap serangan CSRF, di mana penyerang dapat membuat pengguna yang sah mengirimkan permintaan yang tidak diinginkan ke server.
+- **Pemanfaatan oleh Penyerang**: Penyerang dapat memanfaatkan kelemahan ini untuk melakukan tindakan berbahaya atas nama pengguna yang sah, seperti mengubah data atau melakukan transaksi tanpa sepengetahuan pengguna.
+
+### 4. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+
+
+### 5. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
+
+### Hasil Akses URL di Postman
+
+#### show_xml
+![show_xml](xml.png)
+
+#### show_json
+![show_json](json.png)
+
+#### show_xml_by_id
+![show_xml_by_id](xml_id.png)
+
+#### show_json_by_id
+![show_json_by_id](json_id.png)
