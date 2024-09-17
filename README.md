@@ -207,6 +207,51 @@ Kerentanan ini dapat dieksploitasi oleh penyerang untuk melakukan tindakan jahat
       urlpatterns = [
          path('', show_main, name='show_main'),
          path('create-item-entry', create_item_entry, name='create_item_entry'),
+      ]
+      ```
+
+2. Buat 4 Fungsi View untuk Menampilkan Objek dalam Format XML dan JSON
+   - Langkah-langkah:
+     1. Buat View untuk Format JSON dan XML
+      - View XML:
+      ```
+      def show_xml(request):
+         data = ItemEntry.objects.all()
+         return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+      ```
+      - View JSON:
+      ```
+      def show_json(request):
+         data = ItemEntry.objects.all()
+         return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+      ```
+      - View XML by ID:
+      ```
+      def show_xml_by_id(request, id):
+         data = ItemEntry.objects.filter(pk=id)
+         return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+      ```
+      - View JSON by ID:
+      ```
+      def show_json_by_id(request, id):
+         data = ItemEntry.objects.filter(pk=id)
+         return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+      ```
+     2. Tambahkan routing URL untuk setiap view dalam format JSON dan XML ke file `urls.py` di directory aplikasi.
+      ```
+      from django.urls import path
+      from main.views import show_main, create_item_entry, show_xml, show_json, show_xml_by_id, show_json_by_id
+
+      app_name = 'main'
+
+      urlpatterns = [
+         path('', show_main, name='show_main'),
+         path('create-item-entry', create_item_entry, name='create_item_entry'),
+         path('xml/', show_xml, name='show_xml'),
+         path('json/', show_json, name='show_json'),
+         path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+         path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+      ]
       ```
 
 
