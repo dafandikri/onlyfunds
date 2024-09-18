@@ -172,16 +172,16 @@ Kerentanan ini dapat dieksploitasi oleh penyerang untuk melakukan tindakan jahat
 ### Hasil Akses URL di Postman
 
 #### XML
-![show_xml](xml.png)
+![show_xml](graphics/xml.png)
 
 #### JSON
-![show_json](json.png)
+![show_json](graphics/json.png)
 
 #### XML by ID
-![show_xml_by_id](xml_id.png)
+![show_xml_by_id](graphics/xml_id.png)
 
 #### JSON by ID
-![show_json_by_id](json_id.png)
+![show_json_by_id](graphics/json_id.png)
 
 ## Tugas 2 <a id="tugas-2"></a>
 
@@ -245,7 +245,7 @@ Kerentanan ini dapat dieksploitasi oleh penyerang untuk melakukan tindakan jahat
 
 ### 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara `urls.py`, `views.py`, `models.py`, dan berkas HTML.
 
-![Bagan Request-Response](diagram.jpeg)
+![Bagan Request-Response](graphics/diagram.jpeg)
 
 **Penjelasan:**
 - **Client Request:** Client mengirimkan request ke server.
