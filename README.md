@@ -8,12 +8,38 @@ Welcome to OnlyFunds, the best platform for cashless transactions.
 ## Contents:
 - [Tugas 2](#tugas-2)
 - [Tugas 3](#tugas-3)
+- [Tugas 4](#tugas-4)
+
+## Tugas 4 <a id="tugas-4"></a>
+
+### 1. Apa perbedaan antara `HttpResponseRedirect()` dan `redirect()`
+
+- **HttpResponseRedirect()**: Adalah fumction dari django yang digunakan untuk membuat objek HttpResponse yang mengarahkan pengguna ke URL yang ditentukan.
+
+   ```
+   from django.http import HttpResponseRedirect
+   return HttpResponseRedirect('/path/')
+   ```
+
+- **redirect()**: Adalah function shortcut oleh django. `redirect()` juga bisa menerima berbagai jenis argumen: URL dalam bentuk string, objek model, atau nama URL dari routing.
+
+   ```
+   from django.shortcuts import redirect
+   return redirect('path')
+   ```
+
+Perbedaannya adalah `redirect()` lebih fleksibel dan mudah digunakan daripada `HttpResponseRedirect()`.
+
+Tetapi secara internal `HttpResponseRedirect()` dan `redirect()` kurang lebih sama.
+
+### 2.  Jelaskan cara kerja penghubungan model `Product` dengan `User`!
+
 
 ## Tugas 3 <a id="tugas-3"></a>
 
 ### 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 
-Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memastikan bahwa data dapat dikirim dan diterima antara berbagai komponen sistem, seperti antara server dan klien. Ini memungkinkan aplikasi untuk berfungsi dengan baik, menyediakan informasi yang dibutuhkan pengguna, dan memastikan integritas dan konsistensi data.
+   Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memastikan bahwa data dapat dikirim dan diterima antara berbagai komponen sistem, seperti antara server dan klien. Ini memungkinkan aplikasi untuk berfungsi dengan baik, menyediakan informasi yang dibutuhkan pengguna, dan memastikan integritas dan konsistensi data.
 
 ### 2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 
@@ -30,17 +56,17 @@ Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memastik
 
 ### 3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
 
-Method `is_valid()` pada form Django digunakan untuk memeriksa apakah data yang dikirimkan ke form memenuhi semua validasi yang ditentukan dalam form tersebut. Method ini mengembalikan `True` jika data valid dan `False` jika tidak. 
+   Method `is_valid()` pada form Django digunakan untuk memeriksa apakah data yang dikirimkan ke form memenuhi semua validasi yang ditentukan dalam form tersebut. Method ini mengembalikan `True` jika data valid dan `False` jika tidak. 
 
-Kita membutuhkan method ini untuk memastikan bahwa data yang diterima oleh aplikasi adalah valid sebelum diproses lebih lanjut, sehingga mencegah kesalahan dan potensi masalah keamanan.
+   Kita membutuhkan method ini untuk memastikan bahwa data yang diterima oleh aplikasi adalah valid sebelum diproses lebih lanjut, sehingga mencegah kesalahan dan potensi masalah keamanan.
 
 ### 4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
 
-`csrf_token` digunakan untuk melindungi aplikasi dari serangan Cross-Site Request Forgery (CSRF). Ini adalah token unik yang dihasilkan untuk setiap sesi pengguna dan harus disertakan dalam setiap pengiriman formulir.
+   `csrf_token` digunakan untuk melindungi aplikasi dari serangan Cross-Site Request Forgery (CSRF). Ini adalah token unik yang dihasilkan untuk setiap sesi pengguna dan harus disertakan dalam setiap pengiriman formulir.
 
-Jika kita tidak menambahkan `csrf_token`, aplikasi menjadi rentan terhadap serangan CSRF, di mana seorang penyerang dapat membuat pengguna yang sah secara tidak sadar mengirimkan permintaan yang tidak diinginkan ke server.
+   Jika kita tidak menambahkan `csrf_token`, aplikasi menjadi rentan terhadap serangan CSRF, di mana seorang penyerang dapat membuat pengguna yang sah secara tidak sadar mengirimkan permintaan yang tidak diinginkan ke server.
 
-Kerentanan ini dapat dieksploitasi oleh penyerang untuk melakukan tindakan jahat atas nama pengguna yang sah, seperti memodifikasi data atau melakukan transaksi tanpa pengetahuan pengguna.
+   Kerentanan ini dapat dieksploitasi oleh penyerang untuk melakukan tindakan jahat atas nama pengguna yang sah, seperti memodifikasi data atau melakukan transaksi tanpa pengetahuan pengguna.
 
 ### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
@@ -169,19 +195,19 @@ Kerentanan ini dapat dieksploitasi oleh penyerang untuk melakukan tindakan jahat
 
 ### 6. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
 
-### Hasil Akses URL di Postman
+   ### Hasil Akses URL di Postman
 
-#### XML
-![show_xml](graphics/xml.png)
+   #### XML
+   ![show_xml](graphics/xml.png)
 
-#### JSON
-![show_json](graphics/json.png)
+   #### JSON
+   ![show_json](graphics/json.png)
 
-#### XML by ID
-![show_xml_by_id](graphics/xml_id.png)
+   #### XML by ID
+   ![show_xml_by_id](graphics/xml_id.png)
 
-#### JSON by ID
-![show_json_by_id](graphics/json_id.png)
+   #### JSON by ID
+   ![show_json_by_id](graphics/json_id.png)
 
 ## Tugas 2 <a id="tugas-2"></a>
 
