@@ -74,6 +74,192 @@ Ketika pengguna berhasil login, Django menyimpan session ID dalam sebuah cookie 
 
 ### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
+1. Buatlah `register.html` di direktori `main/templates`
+   ```
+   {% extends 'base.html' %}
+
+   {% block meta %}
+   <title>Register</title>
+   {% endblock meta %}
+
+   {% block content %}
+
+   <div class="login">
+   <h1>Register</h1>
+
+   <form method="POST">
+      {% csrf_token %}
+      <table>
+         {{ form.as_table }}
+         <tr>
+         <td></td>
+         <td><input type="submit" name="submit" value="Daftar" /></td>
+         </tr>
+      </table>
+   </form>
+
+   {% if messages %}
+   <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+   </ul>
+   {% endif %}
+   </div>
+
+   {% endblock content %}
+   ```
+
+2. Tambahkan fungsi `register` di bawah ini ke dalam `views.py`
+   ```
+   def register(request):
+      form = UserCreationForm()
+
+      if request.method == "POST":
+         form = UserCreationForm(request.POST)
+         if form.is_valid():
+               form.save()
+               messages.success(request, 'Your account has been successfully created!')
+               return redirect('main:login')
+      context = {'form':form}
+      return render(request, 'register.html', context)
+   ```
+
+3. Tambahkan path url ke dalam `urlpatterns`
+   ```
+   from main.views import register
+   urlpatterns = [
+      ...
+      path('register/', register, name='register'),
+   ]
+   ```
+
+4. Buatlah `login.html` pada direktori `main/templates`
+   ```
+   {% extends 'base.html' %}
+
+   {% block meta %}
+   <title>Login</title>
+   {% endblock meta %}
+
+   {% block content %}
+   <div class="login">
+   <h1>Login</h1>
+
+   <form method="POST" action="">
+      {% csrf_token %}
+      <table>
+         {{ form.as_table }}
+         <tr>
+         <td></td>
+         <td><input class="btn login_btn" type="submit" value="Login" /></td>
+         </tr>
+      </table>
+   </form>
+
+   {% if messages %}
+   <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+   </ul>
+   {% endif %} Don't have an account yet?
+   <a href="{% url 'main:register' %}">Register Now</a>
+   </div>
+
+   {% endblock content %}
+   ```
+
+5. Tambahkan fungsi `login_user` di bawah ini ke dalam `views.py`
+   ```
+   def login_user(request):
+      if request.method == 'POST':
+         form = AuthenticationForm(data=request.POST)
+
+         if form.is_valid():
+               user = form.get_user()
+               login(request, user)
+               return redirect('main:show_main')
+
+      else:
+         form = AuthenticationForm(request)
+      context = {'form': form}
+      return render(request, 'login.html', context)
+   ```
+
+6. Tambahkan path url ke dalam `urlpatterns`
+   ```
+   from main.views import login_user
+   urlpatterns = [
+      ...
+      path('login/', login_user, name='login'),
+   ]
+   ```
+
+7. Tambahkan kode ini di `main.html` yang ada pada direktori `main/templates` setelah hyperlink tag untuk Add New Mood Entry.
+
+   ```
+   ...
+   <a href="{% url 'main:logout' %}">
+   <button>Logout</button>
+   </a>
+   ...
+   ```
+
+8. Tambahkan fungsi di bawah ini ke dalam fungsi `views.py`
+   ```
+   def logout_user(request):
+      logout(request)
+      return redirect('main:login')
+   ```
+
+9. Tambahkan path url ke dalam `urlpatterns`
+   ```
+   from main.views import logout_user
+   urlpatterns = [
+      ...
+      path('logout/', logout_user, name='logout'),
+   ]
+   ```
+
+10. Pada fungsi login_user, kita akan menambahkan fungsionalitas menambahkan cookie yang bernama last_login untuk melihat kapan terakhir kali pengguna melakukan login.
+   ```
+   ...
+   if form.is_valid():
+      user = form.get_user()
+      login(request, user)
+      response = HttpResponseRedirect(reverse("main:show_main"))
+      response.set_cookie('last_login', str(datetime.datetime.now()))
+      return response
+   ...
+   ```
+
+11. Pada fungsi show_main, tambahkan potongan kode 'last_login': request.COOKIES['last_login'] ke dalam variabel context
+   ```
+   context = {
+      'name': 'Pak Bepe',
+      'class': 'PBP D',
+      'npm': '2306123456',
+      'mood_entries': mood_entries,
+      'last_login': request.COOKIES['last_login'],
+   }
+   ```
+
+12. Ubah fungsi `logout_user`
+   ```
+   def logout_user(request):
+      logout(request)
+      response = HttpResponseRedirect(reverse('main:login'))
+      response.delete_cookie('last_login')
+      return response
+   ```
+
+13. Buka berkas main.html dan tambahkan potongan kode berikut di setelah tombol logout untuk menampilkan data last login.
+   ```
+   ...
+   <h5>Sesi terakhir login: {{ last_login }}</h5>
+   ...
+   ```
 
 
 ## Tugas 3 <a id="tugas-3"></a>
