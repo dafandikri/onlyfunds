@@ -34,6 +34,47 @@ Tetapi secara internal `HttpResponseRedirect()` dan `redirect()` kurang lebih sa
 
 ### 2.  Jelaskan cara kerja penghubungan model `Product` dengan `User`!
 
+Penghubungan model Product dengan User pada Django biasanya dilakukan dengan menggunakan ForeignKey.
+
+```
+class ItemEntry(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    price = models.IntegerField()
+    description = models.TextField()
+    bank = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+```
+
+- **ForeignKey**: Digunakan untuk membuat hubungan antar model. Dalam hal ini, Product terhubung ke model User menggunakan ForeignKey.
+- **on_delete=models.CASCADE**: Menentukan bahwa jika objek User dihapus, semua produk yang terhubung dengan pengguna tersebut juga akan dihapus.
+
+Hubungan ini berguna untuk memastikan bahwa setiap produk dimiliki oleh pengguna yang terdaftar dan bisa digunakan untuk memfilter produk berdasarkan pengguna, atau menampilkan daftar produk yang terkait dengan pengguna tertentu.
+
+### 3. Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+
+- **Authentication**: Adalah proses memverifikasi identitas pengguna, biasanya dilakukan melalui username dan password. Tujuan dari authentication adalah memastikan bahwa pengguna yang mengakses sistem adalah pengguna yang sah.
+
+- **Authorization**: Adalah proses menentukan apa yang dapat diakses oleh pengguna setelah mereka diautentikasi. Ini berkaitan dengan hak akses atau izin yang diberikan kepada pengguna untuk melakukan tindakan tertentu atau mengakses sumber daya tertentu di aplikasi.
+
+Django mengimplementasikan kedua konsep ini melalui:
+
+- **Authentication**: Django memiliki django.contrib.auth yang menyediakan model User dan berbagai method untuk melakukan login, logout, dan memverifikasi identitas pengguna.
+
+- **Authorization**: Django menyediakan sistem izin (permissions) yang bisa ditetapkan pada level pengguna atau grup untuk mengontrol akses ke berbagai bagian dari aplikasi.
+
+### 4. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+
+Ketika pengguna berhasil login, Django menyimpan session ID dalam sebuah cookie di browser pengguna. Cookie ini kemudian dikirim kembali ke server pada setiap permintaan berikutnya untuk mengidentifikasi pengguna yang telah login.
+
+- **Kegunaan lain dari cookies**: Cookies digunakan untuk menyimpan data pengguna seperti preferensi, riwayat sesi, atau data pelacakan untuk analisis web. Mereka juga dapat digunakan untuk melacak item yang ditambahkan ke keranjang belanja di aplikasi e-commerce.
+
+- **Keamanan cookies**: Tidak semua cookies aman. Untuk meningkatkan keamanan, cookies harus diberi tanda HttpOnly untuk mencegah akses melalui JavaScript dan Secure untuk memastikan bahwa cookies hanya dikirimkan melalui koneksi HTTPS. Selain itu, menggunakan CSRF token membantu mencegah serangan pemalsuan permintaan lintas situs.
+
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+
 
 ## Tugas 3 <a id="tugas-3"></a>
 
