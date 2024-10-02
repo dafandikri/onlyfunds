@@ -67,6 +67,114 @@ Contoh aplikasi yang belum menerapkan responsive design:
 
 ### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
 
+1. Menambahkan tailwind ke aplikasi, dengan update `base.html` di templates root
+```
+<head>
+{% block meta %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock meta %}
+<script src="https://cdn.tailwindcss.com">
+</script>
+</head>
+```
+
+2. Tambahkan fitur edit_item dan delete_item
+```
+def edit_item(request, id):
+    # Get item entry berdasarkan id
+    mood = ItemEntry.objects.get(pk = id)
+
+    # Set item entry sebagai instance dari form
+    form = ItemEntryForm(request.POST or None, instance=mood)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_item.html", context)
+```
+
+```
+def delete_item(request, id):
+    # Get item berdasarkan id
+    item = ItemEntry.objects.get(pk = id)
+    # Hapus mood
+    item.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
+```
+
+3. Tambahkan import di `views.py`
+```
+from django.shortcuts import .., reverse
+from django.http import .., HttpResponseRedirect
+```
+
+```
+from main.views import delete_mood
+```
+
+4. Buat berkas HTML, `edit_item.html` pada direktori `main/templates`
+```
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<h1>Edit Mood</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Edit Mood"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}
+```
+
+5. Buka `main.html` dan ubahlah kode
+```
+...
+<tr>
+    ...
+    <td>
+        <a href="{% url 'main:edit_item' item_entry.pk %}">
+            <button>
+                Edit
+            </button>
+        </a>
+    </td>
+    <td>
+        <a href="{% url 'main:delete_item' item_entry.pk %}">
+            <button>
+                Delete
+            </button>
+        </a>
+    </td>
+</tr>
+...
+```
+
+6. Tambahkan url di `urls.py`
+```
+...
+
+path('edit-mood/<uuid:id>', edit_mood, name='edit_mood'),
+path('delete/<uuid:id>', delete_mood, name='delete_mood'),
+...
+```
+
 
 
 ## Tugas 4 <a id="tugas-4"></a>
