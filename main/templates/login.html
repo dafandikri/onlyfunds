@@ -5,28 +5,40 @@
 {% endblock meta %}
 
 {% block content %}
-    <div class="login">
-        <h1>Login</h1>
+<div class="min-h-screen flex items-center justify-center bg-blue-100">
+    <div class="flex w-full max-w-screen-lg">
+        <!-- Left side (image or description) -->
+        <div class="bg-blue-500 p-12 w-1/2 flex flex-col justify-center items-start text-white">
+            <h2 class="text-3xl font-bold mb-4"> The best platform for cashless transactions.</h2>
+        </div>
 
-        <form method="POST" action="">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-                <tr>
-                    <td></td>
-                    <td><input class="btn login_btn" type="submit" value="Login" /></td>
-                </tr>
-            </table>
-        </form>
+        <!-- Right side (login form) -->
+        <div class="w-1/2 bg-white flex flex-col justify-center p-8">
+            <h2 class="text-center text-2xl font-semibold mb-8">Log in</h2>
 
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        Don't have an account yet?
-        <a href="{% url 'main:register' %}">Register Now</a>
+            <form class="space-y-6" method="POST" action="">
+                {% csrf_token %}
+                <input type="hidden" name="remember" value="true">
+                <div class="relative">
+                    <input id="username" name="username" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Username">
+                </div>
+                <div class="relative">
+                    <input id="password" name="password" type="password" required placeholder="Password" class="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <button type="submit" class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Log In
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-6">
+                <p class="text-sm text-gray-600">
+                    Don't have an account? 
+                    <a href="{% url 'main:register' %}" class="text-blue-600 hover:text-blue-800">Sign up for OnlyFunds</a>
+                </p>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock content %}

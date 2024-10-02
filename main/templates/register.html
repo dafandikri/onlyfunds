@@ -5,26 +5,74 @@
 {% endblock meta %}
 
 {% block content %}
-    <div class="login">
-        <h1>Register</h1>
+<div class="min-h-screen flex items-center justify-center bg-blue-100">
+    <div class="flex w-full max-w-screen-lg">
+        <!-- Left side (image or description) -->
+        <div class="bg-blue-500 p-12 w-1/2 flex flex-col justify-center items-start text-white">
+            <h2 class="text-3xl font-bold mb-4">Join the best platform for cashless transactions.</h2>
+            <p class="text-lg">Create your account to start</p>
+        </div>
 
-        <form method="POST">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-                <tr>
-                    <td></td>
-                    <td><input type="submit" name="submit" value="Daftar" /></td>
-                </tr>
-            </table>
-        </form>
+        <!-- Right side (registration form) -->
+        <div class="w-1/2 bg-white flex flex-col justify-center p-8">
+            <h2 class="text-center text-2xl font-semibold mb-8">Create your account</h2>
 
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+            <form class="space-y-6" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="remember" value="true">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    {% for field in form %}
+                        <div class="{% if not forloop.first %}mt-4{% endif %}">
+                            <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-gray-700">
+                                {{ field.label }}
+                            </label>
+                            <div class="relative">
+                                <div class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm">
+                                    {{ field }}
+                                </div>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    {% if field.errors %}
+                                        <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <button type="submit" class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Register
+                    </button>
+                </div>
+            </form>
+
+            {% if messages %}
+                <div class="mt-4">
+                    {% for message in messages %}
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            <span class="block sm:inline">{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="text-center mt-6">
+                <p class="text-sm text-gray-600">
+                    Already have an account?
+                    <a href="{% url 'main:login' %}" class="text-blue-600 hover:text-blue-800">
+                        Login here
+                    </a>
+                </p>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock content %}
