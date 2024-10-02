@@ -245,7 +245,7 @@ path('delete/<uuid:id>', delete_mood, name='delete_mood'),
 {% endblock content%}
 ```
 
-9. Kemudian kita style page yang kita buat dengan tailwind.
+9. Kemudian kita akan menambahkan style pada halaman yang kita buat dengan menggunakan Tailwind CSS.
 
 
 
