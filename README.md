@@ -9,6 +9,65 @@ Welcome to OnlyFunds, the best platform for cashless transactions.
 - [Tugas 2](#tugas-2)
 - [Tugas 3](#tugas-3)
 - [Tugas 4](#tugas-4)
+- [Tugas 5](#tugas-5)
+
+## Tugas 5 <a id="tugas-4"></a>
+
+### 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+
+Jika terdapat beberapa CSS selector yang diterapkan pada elemen HTML yang sama, urutan prioritas pengambilan CSS selector ditentukan oleh spesifisitas selector tersebut. Berikut adalah urutan prioritas dari yang paling rendah hingga yang paling tinggi:
+
+1. **Selector Universal (*)** - paling rendah prioritasnya.
+2. **Selector Elemen/Tag** (misalnya, div, p).
+3. **Selector Class** (misalnya, .className).
+4. **Selector Atribut** (misalnya, [type="text"]).
+5. **Selector Pseudo-Class** (misalnya, :hover, :nth-child()).
+6. **Selector ID** (misalnya, #idName).
+7. **Selector Inline Style** - CSS yang didefinisikan langsung pada atribut elemen HTML (style="...").
+8. **!important** - menimpa semua aturan di atas jika digunakan.
+
+### 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+
+Responsive design merupakan konsep penting dalam pengembangan aplikasi web untuk memastikan aplikasi dapat beradaptasi dengan berbagai ukuran layar dan perangkat. Desain yang tidak responsif akan mengakibatkan pengalaman pengguna yang buruk, terutama bagi pengguna perangkat mobile.
+
+Contoh aplikasi yang telah menerapkan responsive design:
+
+**[Instagram](instagram.com)**: Menampilkan tata letak yang menyesuaikan dengan baik di berbagai ukuran layar, mulai dari smartphone hingga desktop.
+Contoh aplikasi yang belum menerapkan responsive design:
+
+**[SIAK NG](academic.ui.ac.id)**: Situs seperti ini tidak menyesuaikan ukuran tampilan berdasarkan perangkat dan sering terlihat rusak atau sulit dibaca di perangkat mobile.
+
+### 3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+
+1. **Margin**: Area di luar border, digunakan untuk memberikan ruang antara elemen dengan elemen lainnya.
+2. **Border**: Garis yang mengelilingi elemen, dapat digunakan untuk mempertegas batas elemen.
+3. **Padding**: Area di dalam border, memberikan ruang antara konten elemen dan border-nya.
+
+![margin-border-padding](graphics/margin-border-padding.png)
+
+### 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+
+1. **Flexbox**: Digunakan untuk menyusun elemen dalam satu dimensi (baik baris atau kolom). Flexbox memudahkan pengaturan elemen dalam baris atau kolom yang fleksibel. Kegunaannya sangat baik untuk membuat layout yang responsif tanpa memerlukan float atau positioning.
+
+```
+.container {
+   display: flex;
+   justify-content: space-between;
+}
+```
+
+2. **Flexbox**: Digunakan untuk menyusun elemen dalam satu dimensi (baik baris atau kolom). Flexbox memudahkan pengaturan elemen dalam baris atau kolom yang fleksibel. Kegunaannya sangat baik untuk membuat layout yang responsif tanpa memerlukan float atau positioning.
+
+```
+.container {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+}
+```
+
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+
+
 
 ## Tugas 4 <a id="tugas-4"></a>
 
