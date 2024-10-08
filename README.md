@@ -10,6 +10,46 @@ Welcome to OnlyFunds, the best platform for cashless transactions.
 - [Tugas 3](#tugas-3)
 - [Tugas 4](#tugas-4)
 - [Tugas 5](#tugas-5)
+- [Tugas 6](#tugas-6)
+
+## Tugas 6 <a id="tugas-6"></a>
+
+### 1. Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+
+JavaScript adalah bahasa pemrograman yang sangat penting dalam pengembangan aplikasi web. Berikut adalah beberapa manfaat utama dari penggunaan JavaScript:
+
+1. **Interaktivitas**: JavaScript memungkinkan pengembang untuk membuat halaman web yang interaktif dan responsif. Dengan JavaScript, elemen-elemen pada halaman web dapat berinteraksi dengan pengguna tanpa perlu memuat ulang halaman.
+2. **Pengolahan Data di Client-Side**: JavaScript memungkinkan pengolahan data di sisi klien, yang dapat mengurangi beban server dan meningkatkan kecepatan respon aplikasi.
+3. **Integrasi dengan HTML dan CSS**: JavaScript dapat dengan mudah diintegrasikan dengan HTML dan CSS untuk membuat antarmuka pengguna yang dinamis dan menarik.
+4. **Ekosistem yang Luas**: JavaScript memiliki ekosistem yang luas dengan banyak pustaka dan framework seperti React, Angular, dan Vue.js yang memudahkan pengembangan aplikasi web yang kompleks.
+
+## 2. Jelaskan fungsi dari penggunaan `await` ketika kita menggunakan `fetch()`! Apa yang akan terjadi jika kita tidak menggunakan `await`?
+
+`await` digunakan untuk menunggu hasil dari operasi asynchronous sebelum melanjutkan eksekusi kode berikutnya. Ketika kita menggunakan `fetch()` untuk melakukan permintaan HTTP, `await` memastikan bahwa kita menunggu respons dari server sebelum melanjutkan ke langkah berikutnya. Berikut adalah contoh penggunaannya:
+
+```
+async function fetchData() {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    console.log(data);
+}
+```
+
+Jika kita tidak menggunakan `await`, kode akan melanjutkan eksekusi tanpa menunggu hasil dari `fetch()`, yang dapat menyebabkan kesalahan karena data belum tersedia saat kita mencoba mengaksesnya.
+
+### 3. Mengapa kita perlu menggunakan decorator `csrf_exempt` pada view yang akan digunakan untuk AJAX `POST`?
+
+Decorator csrf_exempt digunakan untuk menonaktifkan perlindungan CSRF (Cross-Site Request Forgery) pada view tertentu. Ini diperlukan ketika kita menggunakan AJAX POST karena permintaan AJAX tidak selalu menyertakan token CSRF secara otomatis. Dengan menonaktifkan perlindungan CSRF pada view tersebut, kita dapat memastikan bahwa permintaan AJAX dapat diproses tanpa masalah.
+
+Namun, penting untuk berhati-hati saat menggunakan csrf_exempt karena ini dapat membuka celah keamanan jika tidak digunakan dengan benar.
+
+### 4. Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+
+Pembersihan data input pengguna di backend dilakukan untuk memastikan keamanan dan integritas data. Berikut adalah beberapa alasan mengapa pembersihan data tidak hanya dilakukan di frontend:
+
+1. **Keamanan**: Validasi dan pembersihan data di backend membantu mencegah serangan seperti SQL Injection dan XSS (Cross-Site Scripting).
+2. **Konsistensi**: Backend dapat memastikan bahwa semua data yang masuk ke sistem telah divalidasi dan dibersihkan dengan cara yang konsisten.
+3. **Keandalan**: Pengguna dapat memanipulasi kode JavaScript di frontend, sehingga validasi di frontend saja tidak dapat diandalkan sepenuhnya.
 
 ## Tugas 5 <a id="tugas-4"></a>
 
