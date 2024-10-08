@@ -9,16 +9,17 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 import datetime
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 @login_required(login_url='/login')
 def show_main(request):
-    item_entries = ItemEntry.objects.filter(user=request.user)
 
     context = {
         'name': request.user.username,
         'class': 'PBP C',
         'npm': '2306244993',
-        'item_entries': item_entries,
         'last_login': request.COOKIES['last_login'],
     }
 
@@ -37,11 +38,11 @@ def create_item_entry(request):
     return render(request, "create_item_entry.html", context)
 
 def show_xml(request):
-    data = ItemEntry.objects.all()
+    data = ItemEntry.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = ItemEntry.objects.all()
+    data = ItemEntry.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -74,6 +75,8 @@ def login_user(request):
             response = HttpResponseRedirect(reverse("main:show_main"))
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
+        else:
+            messages.error(request, "Invalid username or password. Please try again.")
 
     else:
         form = AuthenticationForm(request)
@@ -88,10 +91,10 @@ def logout_user(request):
 
 def edit_item(request, id):
     # Get item entry berdasarkan id
-    mood = ItemEntry.objects.get(pk = id)
+    item = ItemEntry.objects.get(pk = id)
 
     # Set item entry sebagai instance dari form
-    form = ItemEntryForm(request.POST or None, instance=mood)
+    form = ItemEntryForm(request.POST or None, instance=item)
 
     if form.is_valid() and request.method == "POST":
         # Simpan form dan kembali ke halaman awal
@@ -104,7 +107,23 @@ def edit_item(request, id):
 def delete_item(request, id):
     # Get item berdasarkan id
     item = ItemEntry.objects.get(pk = id)
-    # Hapus mood
+    # Hapus item
     item.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:show_main'))
+
+@csrf_exempt
+@require_POST
+def add_item_entry_ajax(request):
+    name = strip_tags(request.POST.get("name")) # strip HTML tags!
+    description = strip_tags(request.POST.get("description")) # strip HTML tags!
+    price = request.POST.get("price")
+    bank = strip_tags(request.POST.get("bank")) # strip HTML tags!
+    user = request.user
+
+    new_item = ItemEntry(
+        name=name, description=description, price=price, bank=bank, user=user
+    )
+    new_item.save()
+
+    return HttpResponse(b"CREATED", status=201)
