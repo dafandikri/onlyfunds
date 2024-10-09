@@ -51,6 +51,66 @@ Pembersihan data input pengguna di backend dilakukan untuk memastikan keamanan d
 2. **Konsistensi**: Backend dapat memastikan bahwa semua data yang masuk ke sistem telah divalidasi dan dibersihkan dengan cara yang konsisten.
 3. **Keandalan**: Pengguna dapat memanipulasi kode JavaScript di frontend, sehingga validasi di frontend saja tidak dapat diandalkan sepenuhnya.
 
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+
+1. Tambahkan error message pada login di `main/views.py`
+```
+...
+if form.is_valid():
+    user = form.get_user()
+    login(request, user)
+    response = HttpResponseRedirect(reverse("main:show_main"))
+    response.set_cookie('last_login', str(datetime.datetime.now()))
+    return response
+else:
+    messages.error(request, "Invalid username or password. Please try again.")
+...
+```
+
+2. Membuat function untuk menambahkan item dengan AJAX
+```
+...
+@csrf_exempt
+@require_POST
+def add_mood_entry_ajax(request):
+    mood = request.POST.get("mood")
+    feelings = request.POST.get("feelings")
+    mood_intensity = request.POST.get("mood_intensity")
+    user = request.user
+
+    new_mood = MoodEntry(
+        mood=mood, feelings=feelings,
+        mood_intensity=mood_intensity,
+        user=user
+    )
+    new_mood.save()
+
+    return HttpResponse(b"CREATED", status=201)
+...
+```
+
+3. Menambahkan Routing Untuk Fungsi add_item_entry_ajax
+```
+from main.views import ..., add_item_entry_ajax
+```
+
+```
+urlpatterns = [
+    ...
+    path('create-item-entry-ajax', add_item_entry_ajax, name='add_item_entry_ajax'),
+]
+```
+
+4. Menampilkan Data Item Entry dengan fetch() API
+
+5. Membuat Modal Sebagai Form untuk Menambahkan Item
+
+6. Menambahkan Data Item dengan AJAX
+
+7. Melindungi Aplikasi dari Cross Site Scripting (XSS)
+
+
+
 ## Tugas 5 <a id="tugas-4"></a>
 
 ### 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
