@@ -132,19 +132,17 @@ def add_item_entry_ajax(request):
     return HttpResponse(b"CREATED", status=201)
 
 @csrf_exempt
-def create_mood_flutter(request):
+def create_flutter(request):
     if request.method == 'POST':
-
         data = json.loads(request.body)
-        new_mood = ItemEntry.objects.create(
+        new_item = ItemEntry.objects.create(
             user=request.user,
-            mood=data["mood"],
-            mood_intensity=int(data["mood_intensity"]),
-            feelings=data["feelings"]
+            name=data["name"],
+            description=data["description"],
+            price=int(data["price"]),
+            bank=data["bank"]
         )
-
-        new_mood.save()
-
+        new_item.save()
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
